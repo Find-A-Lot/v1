@@ -17,7 +17,11 @@ FAMU students who drive to campus
 - Game day parking feature that says which lots are closed
 
 ## Screen Archetypes / Navigation Flow
-Mocks can be found at https://drive.google.com/open?id=1PYfp-9Eo4LRBZksa7OuYj6ZFMzpxovBY
+Login / Register: https://github.com/Find-A-Lot/v1/blob/master/mocks/login_register.png
+Stream (Parked Users): https://github.com/Find-A-Lot/v1/blob/master/mocks/stream_parked.png
+Stream (Drivers): https://github.com/Find-A-Lot/v1/blob/master/mocks/stream_driver.png
+Details: https://github.com/Find-A-Lot/v1/blob/master/mocks/details.png
+Profile https://github.com/Find-A-Lot/v1/blob/master/mocks/profile.png
 
 ## Mobile
 - Our app utilizes a widget that provides quick access to our app’s functionality
