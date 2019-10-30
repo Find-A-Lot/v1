@@ -21,7 +21,7 @@ FAMU students who drive to campus
 - Stream (Parked Users): https://github.com/Find-A-Lot/v1/blob/master/mocks/stream_parked.png
 - Stream (Drivers): https://github.com/Find-A-Lot/v1/blob/master/mocks/stream_driver.png
 - Details: https://github.com/Find-A-Lot/v1/blob/master/mocks/details.png
-- Profile https://github.com/Find-A-Lot/v1/blob/master/mocks/profile.png
+- Profile: https://github.com/Find-A-Lot/v1/blob/master/mocks/profile.png
 
 ## Mobile
 - Our app utilizes a widget that provides quick access to our app’s functionality
