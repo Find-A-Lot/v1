@@ -2,6 +2,28 @@
 Problem: FAMU students have terrible experiences trying to find parking when  arriving on campus.
 
 Objective: to better regulate parking vacancy on campus by creating a community-driven app to facilitate parking. 
+
+
+### Users
+Property|Type|Description|CRUD
+---|---|---|---|
+uid|string|unique identifier|C
+spotID|reference|reference to spot object|R,U
+name|string|name of user|R,U
+email|string|email of user|R
+isParked|boolean|is the user currently parked|R,U
+
+
+### Spot
+Property|Type|Description|CRUD
+---|---|---|---|
+spotID|reference|reference to spot object|R,U
+uid|string|unique identifier|C
+floor|number|the floor the spot is on|R
+number|number|the specific spot number|R
+isTaken|boolean|is the spot currently taken|R,U
+
+
 # Users
 FAMU students who drive to campus
 ## Required
