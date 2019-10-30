@@ -42,5 +42,5 @@ FAMU students who drive to campus
 
 ## Scope
 - On a scale from 1 - 10, 6.
-- Eh.
+- We do not feel like working on a scaled down version of this project would still be interesting.
 - Very defined. We have the idea, identified the users and their pain points and created an innovative solution to help alleviate those pains. 
