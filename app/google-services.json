@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "836097712394",
+    "firebase_url": "https://find-a-lot1.firebaseio.com",
+    "project_id": "find-a-lot1",
+    "storage_bucket": "find-a-lot1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836097712394:android:10107122b42ff05293daf3",
+        "android_client_info": {
+          "package_name": "com.example.findalot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836097712394-1ivq9hp9gq16b1ctdm1t76i2tto2cdpk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.findalot",
+            "certificate_hash": "4ea3f47935d70d7e325023d868d66d88f605e63a"
+          }
+        },
+        {
+          "client_id": "836097712394-crdd0nn71b826kdt4qu22vh7a0lfs5u2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8ZaOLpjyeuOOPMmcHYinHWOsZ6PrCEtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836097712394-crdd0nn71b826kdt4qu22vh7a0lfs5u2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
