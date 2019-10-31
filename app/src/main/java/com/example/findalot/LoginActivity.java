@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.findalot.MainActivity;
 import com.example.findalot.R;
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,11 +33,14 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private static final String TAG = "LoginActivity";
     private EditText etUsername;
     private EditText etPassword;
     private Button loginBtn;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextView signUp;
 
 
     @Override
@@ -42,19 +48,41 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
         loginBtn = findViewById(R.id.loginBtn);
+        signUp = findViewById(R.id.signupLink);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 //                login(username,password);
-                getDocument();
             }
         });
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signupActivity();
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        persistUser(currentUser);
+    }
+
+    private void persistUser(FirebaseUser user) {
+        if(user != null)
+            mainActivity();
+
     }
 
     public void getDocument() {
@@ -76,52 +104,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void addUser() {
-        System.out.println("Adding user....");
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
 
-        // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        System.out.println("in between....");
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        System.out.println("in between....");
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
-        System.out.println("at the end....");
-    }
-
-    private void login(String username, String password) {
-        System.out.println("test");
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if(e != null) { //there's an error
-                    Log.e(TAG, "Issue with login");
-                    e.printStackTrace();
-                    return;
-                }
-                System.out.println("success again");
-                goMainActivity();
-            }
-        });
-    }
-
-    private void goMainActivity() {
+    private void mainActivity() {
         Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+    private void signupActivity() {
+        Intent i = new Intent(this, SignUpActivity.class);
         startActivity(i);
     }
 }
