@@ -11,23 +11,25 @@
         android:layout_width="330dp"
         android:layout_height="39dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/prompt_email"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.644" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="328dp"
         android:layout_height="44dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
@@ -35,20 +37,32 @@
         android:id="@+id/loginBtn"
         android:layout_width="231dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:text="Login"
+        android:layout_marginTop="40dp"
+        android:text="@string/btnText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
-        android:id="@+id/signupLink"
+        android:id="@+id/appName"
+        android:layout_width="224dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="56dp"
+        android:gravity="center"
+        android:text="@string/appName"
+        android:textSize="36sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/carImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Create an account here."
-        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="@+id/loginBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/test3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

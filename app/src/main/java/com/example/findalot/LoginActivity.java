@@ -60,7 +60,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-//                login(username,password);
+                login(username,password);
+                goMainActivity();
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -105,8 +106,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void mainActivity() {
-        Intent i = new Intent(this, MainActivity.class);
+    private void goMainActivity() {
+        Intent i = new Intent(LoginActivity.this, HomeScreen.class); //gonna put the homescreen here to open
         startActivity(i);
     }
     private void signupActivity() {
