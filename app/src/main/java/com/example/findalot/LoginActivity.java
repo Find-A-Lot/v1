@@ -54,13 +54,18 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
         loginBtn = findViewById(R.id.loginBtn);
-        signUp = findViewById(R.id.signupLink);
+        /*signUp = findViewById(R.id.signupLink);*/
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+<<<<<<< Updated upstream
 //                login(username,password);
+=======
+                /*login(username,password);*/
+                goMainActivity();
+>>>>>>> Stashed changes
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void persistUser(FirebaseUser user) {
         if(user != null)
-            mainActivity();
+            goMainActivity();
 
     }
 

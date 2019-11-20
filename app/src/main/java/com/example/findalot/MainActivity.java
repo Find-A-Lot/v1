@@ -2,6 +2,13 @@ package com.example.findalot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+<<<<<<< Updated upstream
+=======
+import java.util.TimerTask;
+import java.util.Timer;
+import android.widget.TextView;
+import android.util.Log;
+>>>>>>> Stashed changes
 
 import android.location.Location;
 import android.os.Bundle;
