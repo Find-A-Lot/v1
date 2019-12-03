@@ -42,8 +42,6 @@ public class SignUpActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        suName = findViewById(R.id.su_name);
-        suUsername = findViewById(R.id.su_username);
         suEmail = findViewById(R.id.su_email);
         suPassword = findViewById(R.id.su_password);
         suBtn = findViewById(R.id.signupBtn);
@@ -56,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String username = suUsername.getText().toString();
                 String email = suEmail.getText().toString();
                 String password = suPassword.getText().toString();
-                signUp(name,username,email,password);
+                signUp(email,password);
             }
         });
         logIn.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +64,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-    private void signUp(final String name, String username, final String email, final String password) {
+    private void signUp(final String email, final String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -77,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "Authentication Successful.",
                                     Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            addUser(name,email);
+                            addUser(email);
                             mainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -89,13 +87,13 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-    private void addUser(String name, String email) {
+    private void addUser(String email) {
         System.out.println("Adding user....");
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
-        user.put("name", name);
         user.put("email", email);
         user.put("isParked", false);
+        user.put("isAdmin", false);
         user.put("spot", null);
 
         // Add a new document with a generated ID
