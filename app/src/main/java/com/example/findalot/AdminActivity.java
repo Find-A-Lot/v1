@@ -12,7 +12,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,14 +26,20 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -47,7 +57,8 @@ public class AdminActivity extends AppCompatActivity {
     private boolean isContinue = false;
     private boolean isGPS = false;
     private StringBuilder stringBuilder;
-
+    public Integer spinnerVal = 0;
+    private int floorCount = 0;
 
 
     @Override
@@ -60,6 +71,25 @@ public class AdminActivity extends AppCompatActivity {
         locationText = findViewById(R.id.locationText);
         parked_btn = findViewById(R.id.addSpot_btn);
         logout_btn = findViewById(R.id.logout_btn);
+        Spinner spinner = findViewById(R.id.floors_spinner);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Object spinnerVal = Integer.parseInt(parent.getItemAtPosition(pos).toString());
+                setSpinnerVal(Integer.parseInt(parent.getItemAtPosition(pos).toString()));
+                Toast.makeText(AdminActivity.this, spinnerVal + " <--",
+                        Toast.LENGTH_SHORT).show();
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.floors_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -103,12 +133,75 @@ public class AdminActivity extends AppCompatActivity {
         parked_btn.setOnClickListener(v -> {
             isContinue = true;
             stringBuilder = new StringBuilder();
-            getLocation();
+            getFloorCount(spinnerVal);
         });
         logout_btn.setOnClickListener(v -> {
             Log.d(TAG, "Logging out");
             signOut();
         });
+    }
+    private void setSpinnerVal(int value) {
+        spinnerVal = value;
+    }
+    private void getFloorCount(int floor) {
+        floorCount = 0;
+        db.collection("Spots")
+                .whereEqualTo("floor", floor)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                            }
+                            floorCount=task.getResult().size();
+                            addSpot(floor);
+                            Toast.makeText(AdminActivity.this, floorCount + " --> finished async",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+    private void incrementCount() {
+        floorCount++;
+
+    }
+
+    private void addSpot(int floor) {
+        Toast.makeText(AdminActivity.this, floorCount + " / " + wayLongitude + " / " + wayLatitude,
+                Toast.LENGTH_SHORT).show();
+
+        Map<String, Object> coordinates = new HashMap<>();
+        coordinates.put("latitude",wayLatitude);
+        coordinates.put("longitude",wayLongitude);
+
+        Map<String, Object> spot = new HashMap<>();
+        spot.put("floor", floor);
+        spot.put("isTaken", false);
+        spot.put("location", coordinates);
+        spot.put("number", floorCount+1);
+        spot.put("spotHolder", null);
+
+        // Add a new document with a generated ID
+        db.collection("Spots")
+                .add(spot)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Toast.makeText(AdminActivity.this, "Spot successfully added :) ",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     private void getLocation() {
@@ -181,7 +274,7 @@ public class AdminActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 //        String user = currentUser;
-
+        getLocation();
 //        if(user != "wDQeIigGkEWNotUInU6IDT7wOXe2")
 //            loginActivity();
     }

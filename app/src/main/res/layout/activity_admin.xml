@@ -12,7 +12,17 @@
         android:layout_height="wrap_content"
         android:text="Welcome Admin"
         tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="356dp" />
+        tools:layout_editor_absoluteY="215dp" />
+
+    <Spinner
+        android:id="@+id/floors_spinner"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationText" />
 
     <Button
         android:id="@+id/logout_btn"
@@ -34,5 +44,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationText" />
+        app:layout_constraintTop_toBottomOf="@+id/floors_spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>
