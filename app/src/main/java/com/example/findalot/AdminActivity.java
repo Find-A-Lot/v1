@@ -180,10 +180,10 @@ public class AdminActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        String uid = currentUser.getUid();
+//        String user = currentUser;
 
-        if(uid != "wDQeIigGkEWNotUInU6IDT7wOXe2")
-            loginActivity();
+//        if(user != "wDQeIigGkEWNotUInU6IDT7wOXe2")
+//            loginActivity();
     }
 
     public void signOut() {
