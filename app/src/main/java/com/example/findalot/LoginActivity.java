@@ -73,10 +73,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void persistUser(FirebaseUser user) {
-        if(user != null)
-            mainActivity();
+        if(user != null) {
 
+            if (!user.getEmail().equals("admin@famu.edu"))
+                mainActivity();
+            else
+                adminActivity();
+        }
     }
+
     private void checkAuth(String email) {
         db.collection("Users")
                 .whereEqualTo("email", email)
@@ -108,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             String currentUserEmail = user.getEmail();
 
-                            if(true == false)
+                            if(currentUserEmail.equals("admin@famu.edu"))
                                 adminActivity();
                             else
                                 mainActivity();
