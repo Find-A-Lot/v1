@@ -53,16 +53,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-//                login(username,password);
-=======
-                /*login(username,password);*/
-                goMainActivity();
->>>>>>> Stashed changes
-=======
                 login(username,password);
->>>>>>> master
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -82,12 +73,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void persistUser(FirebaseUser user) {
-<<<<<<< HEAD
+
         if(user != null)
-            goMainActivity();
-=======
+            mainActivity();
+
         if(user != null) {
->>>>>>> master
+
 
             if (!user.getEmail().equals("admin@famu.edu"))
                 mainActivity();
@@ -95,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                 adminActivity();
         }
     }
+
 
     private void checkAuth(String email) {
         db.collection("Users")

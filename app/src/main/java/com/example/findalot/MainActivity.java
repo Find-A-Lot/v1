@@ -2,17 +2,14 @@ package com.example.findalot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
+
 import java.util.TimerTask;
 import java.util.Timer;
 import android.widget.TextView;
 import android.util.Log;
->>>>>>> Stashed changes
-=======
+
 import androidx.core.app.ActivityCompat;
->>>>>>> master
+
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -58,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        welcome = findViewById(R.id.welcomeMsg);
         logout_btn = findViewById(R.id.logoutBtn);
 
         logout_btn.setOnClickListener(v -> {
