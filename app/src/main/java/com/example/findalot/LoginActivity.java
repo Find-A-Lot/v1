@@ -18,8 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,22 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
         loginBtn = findViewById(R.id.loginBtn);
-        /*signUp = findViewById(R.id.signupLink);*/
+        signUp = findViewById(R.id.signupLink);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-//                login(username,password);
-=======
-                /*login(username,password);*/
-                goMainActivity();
->>>>>>> Stashed changes
-=======
                 login(username,password);
->>>>>>> master
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -82,13 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void persistUser(FirebaseUser user) {
-<<<<<<< HEAD
-        if(user != null)
-            goMainActivity();
-=======
         if(user != null) {
->>>>>>> master
-
             if (!user.getEmail().equals("admin@famu.edu"))
                 mainActivity();
             else

@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -76,8 +77,6 @@ public class AdminActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 Object spinnerVal = Integer.parseInt(parent.getItemAtPosition(pos).toString());
                 setSpinnerVal(Integer.parseInt(parent.getItemAtPosition(pos).toString()));
-                Toast.makeText(AdminActivity.this, spinnerVal + " <--",
-                        Toast.LENGTH_SHORT).show();
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -95,8 +94,8 @@ public class AdminActivity extends AppCompatActivity {
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        locationRequest.setInterval(10 * 1000); // 10 seconds
-//        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
+        locationRequest.setInterval(5 * 1000); // 5 seconds
+        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
 
         new GpsUtils(this).turnGPSOn(isGPSEnable -> {
             // turn on GPS
@@ -116,6 +115,9 @@ public class AdminActivity extends AppCompatActivity {
                         if (!isContinue) {
                             locationText.setText(String.format(Locale.US, "Lat: %s\nLong: %s", wayLatitude, wayLongitude));
                         } else {
+                            if(locationText.getText().length() > 1)
+                                stringBuilder.setLength(0);
+
                             stringBuilder.append("Lat: ");
                             stringBuilder.append(wayLatitude);
                             stringBuilder.append("\nLong: ");
@@ -152,12 +154,12 @@ public class AdminActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                            }
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//                            }
                             floorCount=task.getResult().size();
                             addSpot(floor);
-                            Toast.makeText(AdminActivity.this, floorCount + " --> finished async",
+                            Toast.makeText(AdminActivity.this, (floorCount + 1) + " --> added",
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -171,9 +173,6 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void addSpot(int floor) {
-        Toast.makeText(AdminActivity.this, floorCount + " / " + wayLongitude + " / " + wayLatitude,
-                Toast.LENGTH_SHORT).show();
-
         Map<String, Object> coordinates = new HashMap<>();
         coordinates.put("latitude",wayLatitude);
         coordinates.put("longitude",wayLongitude);
@@ -182,7 +181,7 @@ public class AdminActivity extends AppCompatActivity {
         spot.put("floor", floor);
         spot.put("isTaken", false);
         spot.put("location", coordinates);
-        spot.put("number", floorCount+1);
+        spot.put("spotNum", floorCount+1);
         spot.put("spotHolder", null);
 
         // Add a new document with a generated ID
@@ -219,6 +218,7 @@ public class AdminActivity extends AppCompatActivity {
                         wayLatitude = location.getLatitude();
                         wayLongitude = location.getLongitude();
                         locationText.setText(String.format(Locale.US, "%s - %s", wayLatitude, wayLongitude));
+                        Toast.makeText(this, "Location Updated", Toast.LENGTH_SHORT).show();
                     } else {
                         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                     }
@@ -245,6 +245,7 @@ public class AdminActivity extends AppCompatActivity {
                                 wayLatitude = location.getLatitude();
                                 wayLongitude = location.getLongitude();
                                 locationText.setText(String.format(Locale.US, "%s - %s", wayLatitude, wayLongitude));
+                                Toast.makeText(this, "Location Updated", Toast.LENGTH_SHORT).show();
                             } else {
                                 fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                             }
@@ -271,12 +272,15 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        String user = currentUser;
-        getLocation();
-//        if(user != "wDQeIigGkEWNotUInU6IDT7wOXe2")
-//            loginActivity();
+        Handler handler = new Handler();
+        int delay = 5000; //milliseconds
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                //do something
+                getLocation();
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
     }
 
     public void signOut() {
