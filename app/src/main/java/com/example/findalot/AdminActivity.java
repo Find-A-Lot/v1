@@ -60,6 +60,7 @@ public class AdminActivity extends AppCompatActivity {
     private StringBuilder stringBuilder;
     public Integer spinnerVal = 0;
     private int floorCount = 0;
+    private int updateCount = 0;
 
 
     @Override
@@ -94,8 +95,8 @@ public class AdminActivity extends AppCompatActivity {
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5 * 1000); // 5 seconds
-        locationRequest.setFastestInterval(5 * 1000); // 5 seconds
+        locationRequest.setInterval(1 * 1000); // 1 seconds
+        locationRequest.setFastestInterval(1 * 1000); // 1 seconds
 
         new GpsUtils(this).turnGPSOn(isGPSEnable -> {
             // turn on GPS
@@ -218,7 +219,8 @@ public class AdminActivity extends AppCompatActivity {
                         wayLatitude = location.getLatitude();
                         wayLongitude = location.getLongitude();
                         locationText.setText(String.format(Locale.US, "%s - %s", wayLatitude, wayLongitude));
-                        Toast.makeText(this, "Location Updated", Toast.LENGTH_SHORT).show();
+                        updateCount++;
+//                        Toast.makeText(this, "1.) Location updated " + updateCount + " times", Toast.LENGTH_SHORT).show();
                     } else {
                         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                     }
@@ -245,7 +247,8 @@ public class AdminActivity extends AppCompatActivity {
                                 wayLatitude = location.getLatitude();
                                 wayLongitude = location.getLongitude();
                                 locationText.setText(String.format(Locale.US, "%s - %s", wayLatitude, wayLongitude));
-                                Toast.makeText(this, "Location Updated", Toast.LENGTH_SHORT).show();
+                                updateCount++;
+                                Toast.makeText(this, "2.) Location updated " + updateCount + " times", Toast.LENGTH_SHORT).show();
                             } else {
                                 fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                             }

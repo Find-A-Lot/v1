@@ -29,6 +29,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private TextView locationText;
+//    private TextView locationText;
     private TextView floor1Spots;
     private TextView floor2Spots;
     private TextView floor3Spots;
@@ -77,13 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
         floor1Spots = findViewById(R.id.container1);
         floor1Spots.setGravity(Gravity.CENTER);
+
         floor2Spots = findViewById(R.id.container2);
         floor2Spots.setGravity(Gravity.CENTER);
+
         floor3Spots = findViewById(R.id.container3);
         floor3Spots.setGravity(Gravity.CENTER);
 
 
-        locationText = findViewById(R.id.welcomeMsg);
+//        locationText = findViewById(R.id.welcomeMsg);
         parked_btn = findViewById(R.id.parkedBtn);
         logout_btn = findViewById(R.id.logoutBtn);
 
@@ -110,17 +114,18 @@ public class MainActivity extends AppCompatActivity {
                         userLatitude = location.getLatitude();
                         userLongitude = location.getLongitude();
                         if (!isContinue) {
-                            locationText.setText(String.format(Locale.US, "Lat: %s\nLong: %s", userLatitude, userLongitude));
+                            continue;
+//                            locationText.setText(String.format(Locale.US, "Lat: %s\nLong: %s", userLatitude, userLongitude));
                         } else {
-                            if(locationText.getText().length() > 1)
-                                stringBuilder.setLength(0);
+//                            if(locationText.getText().length() > 1)
+//                                stringBuilder.setLength(0);
 
                             stringBuilder.append("Lat: ");
                             stringBuilder.append(userLatitude);
                             stringBuilder.append("\nLong: ");
                             stringBuilder.append(userLongitude);
                             stringBuilder.append("\n\n");
-                            locationText.setText(stringBuilder.toString());
+//                            locationText.setText(stringBuilder.toString());
                         }
                         if (!isContinue && fusedLocationClient != null) {
                             fusedLocationClient.removeLocationUpdates(locationCallback);
@@ -157,11 +162,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateSpot(String id) {
         Map<String, Object> map = new HashMap<>();
-        map.put("isTaken",false);
+        map.put("isTaken",true);
 
         db.collection("Spots").document(id).update(map);
-
-        Log.d(TAG, "SPOT UPDATED => " + db.collection("Spots").document(id));
+        DocumentReference docRef =  db.collection("Spots").document(id);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG, "SPOT UPDATED => " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
 
     }
 
@@ -207,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String, Object> currUserLocation = new HashMap<>();
         currUserLocation.put("latitude",userLatitude);
         currUserLocation.put("longitude",userLongitude);
-        Toast.makeText(this, currUserLocation.toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, currUserLocation.toString(), Toast.LENGTH_SHORT).show();
 
         db.collection("Spots")
                 .whereEqualTo("location", currUserLocation)
@@ -244,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
                     if (location != null) {
                         userLatitude = location.getLatitude();
                         userLongitude = location.getLongitude();
-                        locationText.setText(String.format(Locale.US, "%s , %s", userLatitude, userLongitude));
+//                        locationText.setText(String.format(Locale.US, "%s , %s", userLatitude, userLongitude));
                     } else {
                         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                     }
@@ -270,8 +289,8 @@ public class MainActivity extends AppCompatActivity {
                             if (location != null) {
                                 userLatitude = location.getLatitude();
                                 userLongitude = location.getLongitude();
-                                locationText.setText(String.format(Locale.US, "%s - %s", userLatitude, userLongitude));
-                                Toast.makeText(this, "Location Updated", Toast.LENGTH_SHORT).show();
+//                                locationText.setText(String.format(Locale.US, "%s - %s", userLatitude, userLongitude));
+//                                Toast.makeText(this, "Location Updated", Toast.LENGTH_SHORT).show();
                             } else {
                                 fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null);
                             }
