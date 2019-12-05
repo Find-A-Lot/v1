@@ -3,8 +3,11 @@ package com.example.findalot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
+
+import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.util.Log;
 

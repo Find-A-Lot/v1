@@ -29,23 +29,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <HorizontalScrollView
-        android:id="@+id/floor1"
-        android:layout_width="409dp"
-        android:layout_height="118dp"
+
+    <LinearLayout
+        android:layout_width="426dp"
+        android:layout_height="122dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="120dp"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/button1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle"
+            android:text="New Button1" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle"
+            android:text="New Button2" />
+    </>
 
     <HorizontalScrollView
         android:id="@+id/floor2"
-        android:layout_width="409dp"
+        android:layout_width="435dp"
         android:layout_height="111dp"
         android:layout_marginTop="348dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +71,7 @@
 
     <HorizontalScrollView
         android:id="@+id/floor3"
-        android:layout_width="409dp"
+        android:layout_width="435dp"
         android:layout_height="106dp"
         android:layout_marginTop="548dp"
         app:layout_constraintStart_toStartOf="parent"
