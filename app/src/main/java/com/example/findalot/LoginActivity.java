@@ -56,12 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 login(username,password);
             }
         });
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signupActivity();
-            }
-        });
+        signUp.setOnClickListener(view -> signupActivity());
     }
 
     @Override
