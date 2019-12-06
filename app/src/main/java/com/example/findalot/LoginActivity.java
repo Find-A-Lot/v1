@@ -54,12 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 login(username,password);
             }
         });
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signupActivity();
-            }
-        });
+        signUp.setOnClickListener(view -> signupActivity());
     }
 
     @Override
@@ -78,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 adminActivity();
         }
     }
+
 
     private void checkAuth(String email) {
         db.collection("Users")

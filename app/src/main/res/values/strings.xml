@@ -14,4 +14,9 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string name="OneFScroll">First Floor</string>
+    <string name="TwoFScroll">Second Floor</string>
+    <string name="ThreeFScroll">Third Floor</string>
+    <string name="lgout">LOGOUT</string>
+    <string name="prkd">I\'M PARKED</string>
 </resources>
